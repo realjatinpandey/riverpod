@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final nameProvider = Provider<String>((ref) => 'Hello World using Provider');
+final nameProvider =
+    Provider<String>((ref) => 'Hello World using Provider and consumer widget');
 
 void main() {
   runApp(
@@ -24,19 +25,26 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends ConsumerWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final name = ref.watch(nameProvider);
+  Widget build(
+    BuildContext context,
+  ) {
+    // final name = ref.watch(nameProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Provider Scope'),
       ),
       body: Center(
-        child: Text(name),
+        child: Consumer(
+          builder: (context, ref, child) {
+            final name = ref.watch(nameProvider);
+            return Text(name);
+          },
+        ),
       ),
     );
   }
